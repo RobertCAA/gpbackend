@@ -5,6 +5,7 @@ const { logger } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
 const PORT = process.env.PORT || 8000;
 
 // Middleware
@@ -13,7 +14,7 @@ const PORT = process.env.PORT || 8000;
 app.use(logger);
 
 // Makes API available for the public
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Receives and parse JSON data
 app.use(express.json());
