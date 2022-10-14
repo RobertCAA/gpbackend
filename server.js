@@ -10,29 +10,17 @@ const PORT = process.env.PORT || 8000;
 
 // Middleware
 
-<<<<<<< HEAD
-// Custom middleware to handle logs
-app.use(logger);
-
-//Makes API available to the public. Cors middleware to avoid CORS error.
-=======
 //Custom middleware for logs
 app.use(logger);
 
 // Makes API available for the public
->>>>>>> noneCORS
 app.use(cors(corsOptions));
 
 // Receives and parse JSON data
 app.use(express.json());
 
-<<<<<<< HEAD
-// Handles cookies
-app.use(cookieParser);
-=======
 // Cookie handler
 app.use(cookieParser());
->>>>>>> noneCORS
 
 // Loads static files from the public folder
 app.use("/", express.static(path.join(__dirname, "public")));
@@ -52,11 +40,7 @@ app.all("*", (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-// Middleware for logging errors
-=======
 //Error Handler Middleware
->>>>>>> noneCORS
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
