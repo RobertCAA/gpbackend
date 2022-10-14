@@ -3,6 +3,8 @@ const app = express();
 const path = require("path");
 const { logger } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const PORT = process.env.PORT || 8000;
 
 // Middleware
@@ -10,8 +12,14 @@ const PORT = process.env.PORT || 8000;
 //Custom middleware for logs
 app.use(logger);
 
+// Makes API available for the public
+app.use(cors());
+
 // Receives and parse JSON data
 app.use(express.json());
+
+// Cookie handler
+app.use(cookieParser());
 
 // Loads static files from the public folder
 app.use("/", express.static(path.join(__dirname, "public")));
