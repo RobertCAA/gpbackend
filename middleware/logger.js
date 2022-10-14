@@ -5,7 +5,11 @@ const fsPromises = require("fs").promises;
 const path = require("path");
 
 const logEvents = async (message, logFileName) => {
+<<<<<<< HEAD
   const dateTime = format(new Date(), "ddMMyyyy\tHH:mm:ss");
+=======
+  const dateTime = format(new Date(), "ddMMyyy\tHH:mm:ss");
+>>>>>>> noneCORS
   const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
 
   try {
@@ -17,8 +21,13 @@ const logEvents = async (message, logFileName) => {
       path.join(__dirname, "..", "logs", logFileName),
       logItem,
     );
+<<<<<<< HEAD
   } catch (error) {
     console.log(error);
+=======
+  } catch (err) {
+    console.log(err);
+>>>>>>> noneCORS
   }
 };
 
@@ -28,4 +37,8 @@ const logger = (req, res, next) => {
   next();
 };
 
+<<<<<<< HEAD
 module.exports = { logger, logEvents };
+=======
+module.exports = { logEvents, logger };
+>>>>>>> noneCORS
