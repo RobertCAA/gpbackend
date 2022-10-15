@@ -33,7 +33,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 
 // Router middleware
 app.use("/", require("./routes/root"));
-// app.use("/users", require("./routes/userRoutes"));
+app.use("/users", require("./routes/userRoutes"));
 
 // Catch every other petition
 app.all("*", (req, res) => {

@@ -3,9 +3,11 @@ const User = require("../models/User");
 
 const getAllUsers = async (req, res) => {
   const users = await User.find().select("-password").lean();
+
   if (!users?.length) {
     return res.status(400).json({ message: "No Users found" });
   }
+
   res.json(users);
 };
 
@@ -30,7 +32,7 @@ const createNewUser = async (req, res) => {
   const user = await User.create(userObject);
 
   if (user) {
-    res.status(200).json({ message: `New user ${username} created` });
+    res.status(201).json({ message: `New user ${username} created` });
   } else {
     res.status(400).json({ message: "Invalid user data received" });
   }
@@ -84,7 +86,9 @@ const deleteUser = async (req, res) => {
   }
 
   const result = await user.deleteOne();
-  const reply = `Username ${result.username} with ID ${result.id} deleted`;
+
+  const reply = `Username ${result.username} with ID ${result._id} deleted`;
+
   res.json(reply);
 };
 
@@ -92,7 +96,7 @@ const deleteUser = async (req, res) => {
 //   const users = await User.find().select("-password").lean();
 // };
 
-module.export = {
+module.exports = {
   getAllUsers,
   createNewUser,
   updateUser,
