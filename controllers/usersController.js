@@ -1,13 +1,11 @@
-const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const User = require("../models/User");
 
 const getAllUsers = async (req, res) => {
-  // Get all users from MongoDB
   const users = await User.find().select("-password").lean();
 
-  // If no users
   if (!users?.length) {
-    return res.status(400).json({ message: "No users found" });
+    return res.status(400).json({ message: "No Users found" });
   }
 
   res.json(users);
@@ -16,21 +14,16 @@ const getAllUsers = async (req, res) => {
 const createNewUser = async (req, res) => {
   const { username, password, roles } = req.body;
 
-  // Input validator
   if (!username || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  const duplicate = await User.findOne({ username })
-    .collation({ locale: "en", strength: 2 })
-    .lean()
-    .exec();
+  const duplicate = await User.findOne({ username }).lean().exec();
 
   if (duplicate) {
     return res.status(409).json({ message: "Duplicate username" });
   }
 
-  // Hash password
   const hashedPwd = await bcrypt.hash(password, 10);
 
   const userObject =
@@ -38,7 +31,6 @@ const createNewUser = async (req, res) => {
       ? { username, password: hashedPwd }
       : { username, password: hashedPwd, roles };
 
-  // Create and store new user
   const user = await User.create(userObject);
 
   if (user) {
@@ -51,7 +43,6 @@ const createNewUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const { id, username, roles, active, password } = req.body;
 
-  // Input validator
   if (
     !id ||
     !username ||
@@ -59,23 +50,16 @@ const updateUser = async (req, res) => {
     !roles.length ||
     typeof active !== "boolean"
   ) {
-    return res
-      .status(400)
-      .json({ message: "All fields except password are required" });
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   const user = await User.findById(id).exec();
 
-  // Checks if user exists
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
 
-  // Checks for duplicate
-  const duplicate = await User.findOne({ username })
-    .collation({ locale: "en", strength: 2 })
-    .lean()
-    .exec();
+  const duplicate = await User.findOne({ username }).lean().exec();
 
   if (duplicate && duplicate?._id.toString() !== id) {
     return res.status(409).json({ message: "Duplicate username" });
@@ -86,8 +70,7 @@ const updateUser = async (req, res) => {
   user.active = active;
 
   if (password) {
-    // Hash password
-    user.password = await bcrypt.hash(password, 10); // salt rounds
+    user.password = await bcrypt.hash(password, 10);
   }
 
   const updatedUser = await user.save();
@@ -98,14 +81,12 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   const { id } = req.body;
 
-  // Check if there is id
   if (!id) {
-    return res.status(400).json({ message: "User ID Required" });
+    return res.status(400).json({ message: "User ID required" });
   }
 
   const user = await User.findById(id).exec();
 
-  // Checks if the user exists
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
@@ -116,6 +97,10 @@ const deleteUser = async (req, res) => {
 
   res.json(reply);
 };
+
+// const getSingleUser = async (req, res) => {
+//   const users = await User.find().select("-password").lean();
+// };
 
 module.exports = {
   getAllUsers,
