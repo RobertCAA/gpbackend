@@ -3,35 +3,35 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   first_name: {
     type: String,
-    required: true,
+    required: false,
   },
   last_name: {
     type: String,
-    required: true,
+    required: false,
   },
   birth: {
     type: Date,
-    required: true,
+    required: false,
   },
   gender: {
     type: String,
-    required: true,
+    required: false,
   },
   telephone: {
     type: Number,
-    required: true,
+    required: false,
   },
   email: {
     type: String,
-    required: true,
+    required: false,
   },
   iban: {
     type: String,
-    required: true,
+    required: false,
   },
   location: {
     type: String,
-    required: true,
+    required: false,
   },
   username: {
     type: String,
