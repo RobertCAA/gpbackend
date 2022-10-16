@@ -11,6 +11,17 @@ const getAllUsers = async (req, res) => {
   res.json(users);
 };
 
+const getUser = async (req, res) => {
+  if (!req?.params?.id) res.status(400).json({ message: "User ID required." });
+  const user = await User.findOne({ _id: req.params.id }).exec();
+  if (!user) {
+    return res
+      .status(204)
+      .json({ message: `No user matches ID: ${req.params.id}` });
+  }
+  res.json(user);
+};
+
 const createNewUser = async (req, res) => {
   const { username, password, roles } = req.body;
 
@@ -92,12 +103,9 @@ const deleteUser = async (req, res) => {
   res.json(reply);
 };
 
-// const getSingleUser = async (req, res) => {
-//   const users = await User.find().select("-password").lean();
-// };
-
 module.exports = {
   getAllUsers,
+  getUser,
   createNewUser,
   updateUser,
   deleteUser,

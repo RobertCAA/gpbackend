@@ -8,4 +8,6 @@ router
   .patch(usersController.updateUser)
   .delete(usersController.deleteUser);
 
+router.route("/:id").get(usersController.getUser);
+
 module.exports = router;
