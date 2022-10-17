@@ -1,11 +1,8 @@
 const allowedOrigins = [
-  "http://localhost:8000",
-  "http://localhost:3000",
-  "https://www.google.com",
-  "https://google.com",
-  "https://academia-geopol.es",
   "https://gpfront.onrender.com/",
-  "https://gpback.onrender.com/",
+  "52.41.36.82",
+  "54.191.253.12",
+  "44.226.122.3",
 ];
 
 module.exports = allowedOrigins;
