@@ -4,6 +4,7 @@ const allowedOrigins = [
   "https://www.google.com",
   "https://google.com",
   "https://academia-geopol.es",
+  "https://gpfront.onrender.com/",
 ];
 
 module.exports = allowedOrigins;
